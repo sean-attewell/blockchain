@@ -98,7 +98,7 @@ class Blockchain(object):
         """
         guess = f'{last_proof}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
-        return guess_hash[:4] == "0000"
+        return guess_hash[:6] == "000000"
 
     def valid_chain(self, chain):
         """
@@ -204,5 +204,5 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         port = int(sys.argv[1])
     else:
-        port = 5000
+        port = 6000
     app.run(host='0.0.0.0', port=port)
