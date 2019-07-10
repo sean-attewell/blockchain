@@ -86,7 +86,7 @@ class Blockchain(object):
         guess_hash = hashlib.sha256(guess).hexdigest()
 
         # return True if the first 6 digits of the hash ar zreos
-        return guess_hash[:6] == "000000"
+        return guess_hash[:4] == "0000"
 
     def valid_chain(self, chain):
         """
@@ -143,6 +143,9 @@ def mine():
 
     values = request.get_json()
 
+    # print("request.get_json()", request.get_json())
+    # print("values", values)
+
     # Check that the required fields are in the POST'ed data
     # required = ['proof', 'client_node_identifier']
     # if not all(k in values for k in required):
@@ -150,7 +153,7 @@ def mine():
 
     last_block = blockchain.last_block
     proof = values['proof']
-    client_node_identifier = values['client_node_identifier']
+    # client_node_identifier = values['client_node_identifier']
 
     if not blockchain.valid_proof(last_block[proof], proof):
         return 'invalid proof / block already mined', 400
@@ -160,7 +163,7 @@ def mine():
     # The recipient is the current node, it did the mining!
     # The amount is 1 coin as a reward for mining the next block
     blockchain.new_transaction(
-        sender="0", recipient=client_node_identifier, amount=1)
+        sender="0", recipient=node_identifier, amount=1)
     # Forge the new Block by adding it to the chain
     previous_hash = blockchain.hash(last_block)
     block = blockchain.new_block(proof, previous_hash)
