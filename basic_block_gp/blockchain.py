@@ -142,7 +142,7 @@ def last_proof():
 def mine():
 
     values = request.get_json()
-
+    print(values)
     # print("request.get_json()", request.get_json())
     # print("values", values)
 
