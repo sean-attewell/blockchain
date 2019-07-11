@@ -142,9 +142,8 @@ def last_proof():
 def mine():
 
     values = request.get_json()
-    print(values)
     # print("request.get_json()", request.get_json())
-    # print("values", values)
+    print("values", values)
 
     # Check that the required fields are in the POST'ed data
     # required = ['proof', 'client_node_identifier']
@@ -155,7 +154,7 @@ def mine():
     proof = values['proof']
     # client_node_identifier = values['client_node_identifier']
 
-    if not blockchain.valid_proof(last_block[proof], proof):
+    if not blockchain.valid_proof(last_block['proof'], proof):
         return 'invalid proof / block already mined', 400
 
     # We must receive a reward for finding the proof.
