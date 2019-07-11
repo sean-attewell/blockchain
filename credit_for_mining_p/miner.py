@@ -1,6 +1,8 @@
 import hashlib
 import requests
+from blockchain import node_identifier
 
+import os
 import sys
 
 
@@ -46,7 +48,18 @@ if __name__ == '__main__':
         data = r.json()
         new_proof = proof_of_work(data.get('proof'))
 
-        post_data = {"proof": new_proof}
+        text_file_boolean = os.path.isfile('./my_id.txt')
+
+        if text_file_boolean:
+            f = open("./my_id.txt", "r")
+            client_id = f.readline()
+        
+        else:
+            client_id = node_identifier
+
+        post_data = {"proof": new_proof, "id": client_id}
+
+        print(post_data['id'])
 
         r = requests.post(url=node + "/mine", json=post_data)
         data = r.json()
